@@ -6,82 +6,43 @@ class VideoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
     return SliverToBoxAdapter(
       child: Container(
-          color: Colors.black,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 800.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // 수직 방향 정렬
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '끼끼님이 시청중인',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.white, // 원하는 색상으로 변경
-                  ),
-                ),
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 500,
-                    autoPlay: false,
-                    aspectRatio: 1.0,
-                    enlargeCenterPage: true,
-                  ),
-                  items: imageSliders,
-                ),
-                Text(
-                  '수연님이 시청중인',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.white, // 원하는 색상으로 변경
-                  ),
-                ),
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 500,
-                    autoPlay: false,
-                    aspectRatio: 1.0,
-                    enlargeCenterPage: true,
-                  ),
-                  items: imageSliders,
-                ),
-                Text(
-                  '윤정님이 시청중인',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.white, // 원하는 색상으로 변경
-                  ),
-                ),
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 500,
-                    autoPlay: false,
-                    aspectRatio: 1.0,
-                    enlargeCenterPage: true,
-                  ),
-                  items: imageSliders,
-                ),
-                Text(
-                  '유경님이 시청중인',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.white, // 원하는 색상으로 변경
-                  ),
-                ),
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 500,
-                    autoPlay: false,
-                    aspectRatio: 1.0,
-                    enlargeCenterPage: true,
-                  ),
-                  items: imageSliders,
-                ),
-              ],
+        color: Colors.black,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center, // 수직 방향 정렬
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '끼끼님이 시청중인',
+              style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.white, // 원하는 색상으로 변경
+              ),
             ),
-          )),
+            CarouselSlider(
+              options: CarouselOptions(
+                height: height,
+                autoPlay: false,
+                aspectRatio: 16 / 9,
+                // enlargeCenterPage: true,
+                viewportFraction: 0.3,
+              ),
+              items: imgList
+                  .map((item) => Container(
+                        color: Colors.yellow,
+                        child: Center(
+                            heightFactor: 500,
+                            widthFactor: MediaQuery.of(context).size.width,
+                            child: Image.network(item, fit: BoxFit.cover)),
+                      ))
+                  .toList(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -95,47 +56,50 @@ final List<String> imgList = [
   'assets/6.jpg',
   'assets/7.jpg',
 ];
-
-final List<Widget> imageSliders = imgList
-    .map(
-      (item) => Container(
-        child: Container(
-          margin: EdgeInsets.all(0.0),
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              child: Stack(
-                children: <Widget>[
-                  Image.network(item, fit: BoxFit.cover),
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromARGB(200, 0, 0, 0),
-                            Color.fromARGB(0, 0, 0, 0)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 2.0, horizontal: 2.0),
-                      child: Text(
-                        'No. ${imgList.indexOf(item)} image',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )),
-        ),
-      ),
-    )
-    .toList();
+//
+// final List<Widget> imageSliders = imgList
+//     .map(
+//       (item) => Container(
+//         child: Container(
+//           margin: EdgeInsets.all(1.0),
+//           child: ClipRRect(
+//               borderRadius: BorderRadius.all(Radius.circular(5.0)),
+//               child: Stack(
+//                 children: <Widget>[
+//                   Image.network(item, fit: BoxFit.cover),
+//                   Positioned(
+//                       bottom: 0.0,
+//                       left: 0.0,
+//                       right: 0.0,
+//                       child: Stack(
+//                         children: [
+//                           Container(
+//                             decoration: BoxDecoration(
+//                               gradient: LinearGradient(
+//                                 colors: [
+//                                   Color.fromARGB(200, 0, 0, 0),
+//                                   Color.fromARGB(0, 0, 0, 0)
+//                                 ],
+//                                 begin: Alignment.bottomCenter,
+//                                 end: Alignment.topCenter,
+//                               ),
+//                             ),
+//                             padding: EdgeInsets.symmetric(
+//                                 vertical: 2.0, horizontal: 2.0),
+//                             child: Text(
+//                               '${imgList.indexOf(item)}.',
+//                               style: TextStyle(
+//                                 color: Colors.white,
+//                                 fontSize: 20.0,
+//                                 fontWeight: FontWeight.bold,
+//                               ),
+//                             ),
+//                           ),
+//                         ],
+//                       )),
+//                 ],
+//               )),
+//         ),
+//       ),
+//     )
+//     .toList();
